@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
 const Mockgoose = require('mockgoose').Mockgoose;
 const mockgoose = new Mockgoose(mongoose);
-const MovieModel = require('./movies.schema');
+const MovieModel = require('../schemas/movies.schema');
+const MovieService = require('./movies.service');
 
-const mongodb_uri='mongodb://localhost:27017/mydb';
+const mongodb_uri='mongodb://localhost:27017/netflixDb';
 const options = {
     useMongoClient: true,
     autoIndex: false, // Don't build indexes
@@ -16,11 +17,13 @@ const options = {
   
 
 mockgoose.prepareStorage().then(function() {
-  mongoose.connect(mongodb_uri, options);	
+    mongoose.connect(mongodb_uri, options);	
 });
 
-describe('Movies Model Testing Suit',function(){
-  it('Should succeed',function(){
+describe('Movies Service Testing Suite',function(){
+  it('Should succeed',async function(){
+      let movies=await MovieService.getAllMovies();
+      console.log(movies);
     expect(true).toBe(true);
   });
   
